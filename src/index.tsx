@@ -7,7 +7,7 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk  from 'redux-thunk';
 import {reducers} from './reducers';
 import { Provider } from 'react-redux';
-import { fetchTodos } from './actions';
+import { fetchTodos,completeTodo } from './actions';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}><App fetchTodos={fetchTodos} /></Provider> 
+    <Provider store={store}><App fetchTodos={fetchTodos} completeTodo={completeTodo} /></Provider> 
   </React.StrictMode>
 );
 

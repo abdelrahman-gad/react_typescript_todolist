@@ -1,65 +1,101 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora&family=Pacifico&family=Varela+Round&display=swap');
-* {
-  background-color: rgb(21, 32, 43);
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.container {
-  font-family: 'Lora', serif;
-  color: rgba(29, 161, 242, 1);
-  font-size: 16px;
-  /* background-color: #F7F7f7; */
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
+.header {
+  flex: 30%;
+  background-color: tomato;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.header input {
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  padding-left: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+}
+
+.header button {
+  width: 70px;
+  height: 87px;
+  border: none;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.todoList {
+  flex: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 50px;
+  flex-direction: column;
+}
+
+.task {
+  width: 500px;
+  height: 50px;
+  display: flex;
+  color: white;
+  margin: 15px;
+}
+
+.task .content {
+  flex: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task .content span {
   display: grid;
   place-items: center;
+  border: 1px solid white;
   width: 100%;
+  height: 100%;
+  font-size: 18px;
+  border-right: none;
+  background-color: tomato;
 }
 
-.button {
-  font-family: 'Pacifico', cursive;
-  font-size: 48px;
-  color: whitesmoke;
-  border-radius: 8px;
-  border-style: none;
-  outline: none;
-  background-color: rgba(29, 161, 242, 1);
-  margin-top: 16px;
-  margin-bottom: 16px;
-  width: 12%;
-}
-
-.button:hover {
+.task button {
+  flex: 20%;
+  height: 100%;
+  border: none;
+  background-color: lightseagreen;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  color: white;
   cursor: pointer;
-  background-color: rgba(29, 161, 242, 0.8);
 }
 
-.span {
-  font-size: 32px;
-  /* background-color: #F7F7f7; */
-}
-
-.info {
-  font-family: 'Varela Round', sans-serif;
-  color: whitesmoke;
-}
-
-.mainList {
-  background-color: rgb(32, 46, 58);
-  border-radius: 16px;
-}
-
-.list {
-  font-family: 'Varela Round', sans-serif;
-  color: whitesmoke;
-  font-size: 16px;
-  list-style: circle;
-  background-color: rgb(32, 46, 58);
-  border-radius: 16px;
-  width: initial;
-}
-
-.list:hover {
-  color: rgba(29, 161, 242, 1);
-  cursor: pointer;
-  background-color: rgb(23, 45, 64);
-  border-radius: 8px;
-  width: initial;
+.completed{
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  text-decoration-color: lightseagreen;
 }

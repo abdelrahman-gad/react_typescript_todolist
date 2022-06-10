@@ -1,41 +1,58 @@
 import axios from 'axios';
-import { Dispatch } from 'redux';
+import { AnyAction, Dispatch } from 'redux';
 import { ActionTypes } from './types';
+// import { ThunkDispatch } from 'redux-thunk';
+const url = 'https://jsonplaceholder.typicode.com/todos';
+const limit = '?_limit=10'
 
-const url = 'https://jsonplaceholder.typicode.com/todos?_limit=10';
-
+// type Dispatcher = ThunkDispatch<undefined, AnyAction>;
 export interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
+    id: number;
+    title: string;
+    completed: boolean;
 }
 
 export interface FetchTodosAction {
-  type: ActionTypes.fetchTodos;
-  payload: Todo[];
+    type: ActionTypes.fetchTodos;
+    payload: Todo[];
 }
 
-export interface DeleteTodoAction{
-  type: ActionTypes.deleteTodo;
-  payload: number;
+export interface CompleteTodoAction {
+    type: ActionTypes.completeTodo;
+    payload: number;
 }
 
 export const fetchTodos = () => {
-   
-  return async (dispatch: Dispatch) => {
-      
-    const response = await axios.get<Todo[]>(url);
-  
-    dispatch<FetchTodosAction>({
-      type: ActionTypes.fetchTodos,
-      payload: response.data,
-    });
-  };
+
+    return async (dispatch: Dispatch) => {
+
+        const response = await axios.get<Todo[]>(url+limit);
+
+        dispatch<FetchTodosAction>({
+            type: ActionTypes.fetchTodos,
+            payload: response.data,
+        });
+    };
 };
 
-export const deleteTodo = (id: number): DeleteTodoAction => {
-  return {
-    type: ActionTypes.deleteTodo,
-    payload: id,
-  };
+export const completeTodo = (id: number) => {
+
+    return async (dispatch: Dispatch) => {
+        const response = await axios.put(
+           url+'/'+id,
+           {
+            data:{
+                completed: true
+            }
+           }
+        );
+            
+        dispatch<CompleteTodoAction>({
+            type: ActionTypes.completeTodo,
+            payload: id,
+        });
+    }
 };
+
+
+
