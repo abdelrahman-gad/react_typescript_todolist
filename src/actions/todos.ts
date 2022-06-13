@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { AnyAction, Dispatch } from 'redux';
+import { TodoTask } from '../components/TodoTask';
 import { ActionTypes } from './types';
 // import { ThunkDispatch } from 'redux-thunk';
-const url = 'https://jsonplaceholder.typicode.com/todos';
-const limit = '?_limit=10'
+const url:string = process.env.REACT_APP_API_URL!;
+const limit:string = `?_limit=${process.env.REACT_APP_PAGE_LIMIT}`!;
 
 // type Dispatcher = ThunkDispatch<undefined, AnyAction>;
 export interface Todo {
@@ -21,6 +22,11 @@ export interface CompleteTodoAction {
     type: ActionTypes.completeTodo;
     payload: number;
 }
+
+export interface AddTodoAction {
+    type:ActionTypes.addTodo;
+    payload:Todo;
+ }
 
 export const fetchTodos = () => {
 
@@ -53,6 +59,29 @@ export const completeTodo = (id: number) => {
         });
     }
 };
+
+export const addTodo = (todo:Todo) => {
+   
+    return async (dispatch:Dispatch)=>{
+        const response =  await fetch(
+            url,
+            {
+                method: 'POST',
+                body:JSON.stringify(todo),
+                headers:{
+                    'Content-type': 'application/json; charset=UTF-8'
+                }
+            }
+        );
+        const data = await response.json();
+    
+        dispatch<AddTodoAction>({
+            type:ActionTypes.addTodo,
+            payload:data
+        })
+    }
+}
+
 
 
 

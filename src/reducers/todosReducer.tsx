@@ -5,12 +5,13 @@ export const todosReducer = (state: Todo[] = [], action: Action) => {
     case ActionTypes.fetchTodos:
       return action.payload;
     case ActionTypes.completeTodo:
-        console.log('reducer'+action.payload);
       return state.map((todo: Todo) => {
           if(todo.id==action.payload){
               return {...todo, completed: true};
           }else return todo;
       });
+    case ActionTypes.addTodo:
+      return [...state, action.payload]; 
     default:
       return state;
   }

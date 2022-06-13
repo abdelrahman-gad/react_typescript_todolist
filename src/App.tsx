@@ -1,14 +1,16 @@
-import React , {FC} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.css';
 import './App.css';
-import {fetchTodos,completeTodo} from './actions';
+import { fetchTodos, completeTodo, addTodo } from './actions';
 import { Todo } from './actions';
 import { TodoTask } from './components/TodoTask';
 export interface AppProps {
   todos?: Todo[];
   fetchTodos: Function;
   completeTodo: Function;
+  addTodo: Function;
+
 }
 
 interface AppState {
@@ -16,19 +18,36 @@ interface AppState {
 }
 
 
-function App<FC>(props:AppProps) {
- 
+function App(props: AppProps, state: AppState) {
+
   const dispatch = useDispatch();
- 
-  const handleFetchTodos = () => {  
-   dispatch(props.fetchTodos());
+
+  const handleFetchTodos = () => {
+    dispatch(props.fetchTodos());
   }
 
-  const handleCompleteTodo = (id:number) => {
+  const handleCompleteTodo = (id: number) => {
     dispatch(props.completeTodo(id));
   }
-  const todos = useSelector((state:any)=>state.todos);
-  
+  const todos = useSelector((state: any) => state.todos);
+
+  const [todoTitle, setTodoTitle] = useState('');
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoTitle(event.target.value);
+    console.log(todoTitle);
+  }
+
+  const handleAddTodo = () => {
+    dispatch(
+      props.addTodo(
+        {
+          title: todoTitle,
+          completed: false
+        }));
+    setTodoTitle('');
+  }
+
   return (
     // <div className="App">
     // <div className={styles.container}>
@@ -41,33 +60,27 @@ function App<FC>(props:AppProps) {
     // </div>
 
     <div className="App">
-    <div className="header">
-       <button onClick={handleFetchTodos} >Fetch Todos</button>
-      <div className="inputContainer">
-        <input
-          type="text"
-          placeholder="Task..."
-          name="task"
-          // value={taskName}
-          // onChange={handleChange}
-        />
-        <input
-          type="number"
-          placeholder="Deadline (in Days)..."
-          name="deadline"
-          // value={deadline}
-          // onChange={handleChange}
-        />
-      </div>
-      {/* <button onClick={addTask} >Add Task</button> */}
-    </div>
-    <div className="todoList">
-      {todos.map((todo: Todo, key: number) => {
-        return <TodoTask key={key} todo={todo}   completeTodo={()=>handleCompleteTodo(todo.id)} />
-      })}
-    </div>
+      <div className="header">
+        <button onClick={handleFetchTodos} >Fetch Todos</button>
+        <div className="inputContainer">
+          <input
+            type="text"
+            placeholder="Task..."
+            name="task"
+            value={todoTitle}
+            onChange={handleTitleChange}
+          />
 
-  </div>
+        </div>
+        <button onClick={handleAddTodo} >Add Task</button>
+      </div>
+      <div className="todoList">
+        {todos.map((todo: Todo, key: number) => {
+          return <TodoTask key={key} todo={todo} completeTodo={() => handleCompleteTodo(todo.id)} />
+        })}
+      </div>
+
+    </div>
   );
 }
 

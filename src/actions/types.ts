@@ -1,8 +1,9 @@
-import { FetchTodosAction, CompleteTodoAction } from './todos';
+import { FetchTodosAction, CompleteTodoAction , AddTodoAction } from './todos';
 
 export enum ActionTypes {
   fetchTodos,
-  completeTodo
+  completeTodo,
+  addTodo
 }
 
-export type Action = FetchTodosAction | CompleteTodoAction;
+export type Action = FetchTodosAction | CompleteTodoAction | AddTodoAction;
