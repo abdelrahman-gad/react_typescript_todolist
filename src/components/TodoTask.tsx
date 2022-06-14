@@ -3,10 +3,11 @@ import { Todo } from './../actions';
 
 type TodoProps = {
   todo: Todo,
-  completeTodo: (id: number) => void
+  completeTodo: (id: number) => void,
+  deleteTodo: (id: number) => void
 }
 
-export const TodoTask = ({ todo, completeTodo }: TodoProps) => {
+export const TodoTask = ({ todo, completeTodo , deleteTodo }: TodoProps) => {
   return (
     <div className="task">
       <div className="content">
@@ -19,6 +20,14 @@ export const TodoTask = ({ todo, completeTodo }: TodoProps) => {
         }}
       >
         mark as done
+      </button>
+
+      <button
+      
+         className="danger"
+         onClick={()=>deleteTodo(todo.id)}
+         >
+           delete
       </button>
     </div>
   );

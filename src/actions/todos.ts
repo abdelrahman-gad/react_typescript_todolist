@@ -26,7 +26,13 @@ export interface CompleteTodoAction {
 export interface AddTodoAction {
     type:ActionTypes.addTodo;
     payload:Todo;
- }
+}
+
+export interface DeleteTodoAction{
+    type:ActionTypes.deleteTodo;
+    payload:number
+}
+
 
 export const fetchTodos = () => {
 
@@ -78,6 +84,22 @@ export const addTodo = (todo:Todo) => {
         dispatch<AddTodoAction>({
             type:ActionTypes.addTodo,
             payload:data
+        })
+    }
+}
+
+export const deleteTodo = (id:number)=>{
+    return async(dispatch:Dispatch)=>{
+        const response = await fetch(
+            url+'/'+id,
+            {
+                method:'DELETE'
+            }
+        );
+        const data = await response.json();
+        dispatch<DeleteTodoAction>({
+            type:ActionTypes.deleteTodo,
+            payload:id
         })
     }
 }
