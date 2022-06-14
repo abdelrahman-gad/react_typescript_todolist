@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.css';
 import './App.css';
-import { fetchTodos, completeTodo, addTodo  , deleteTodo} from './actions';
+import { fetchTodos, completeTodo, addTodo, deleteTodo , updateTodo} from './actions';
 import { Todo } from './actions';
 import { TodoTask } from './components/TodoTask';
 export interface AppProps {
@@ -10,8 +10,8 @@ export interface AppProps {
   fetchTodos: Function;
   completeTodo: Function;
   addTodo: Function;
-  deleteTodo:Function;
-
+  deleteTodo: Function;
+  updateTodo:Function;
 }
 
 interface AppState {
@@ -36,10 +36,10 @@ function App(props: AppProps, state: AppState) {
     dispatch(props.completeTodo(id));
   }
 
-  const handleDeleteTodo = (id:number)=>{
-       dispatch(props.deleteTodo(id));
+  const handleDeleteTodo = (id: number) => {
+    dispatch(props.deleteTodo(id));
   }
- 
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoTitle(event.target.value);
     console.log(todoTitle);
@@ -55,6 +55,11 @@ function App(props: AppProps, state: AppState) {
     setTodoTitle('');
   }
 
+  const handleUpdateTodo=(id:number)=>{
+    dispatch(props.updateTodo({id,title:todoTitle}));
+  }
+
+ 
   return (
     // <div className="App">
     // <div className={styles.container}>
@@ -84,11 +89,12 @@ function App(props: AppProps, state: AppState) {
       <div className="todoList">
         {todos.map((todo: Todo, key: number) => {
           return <TodoTask
-                       key={key}
-                       todo={todo} 
-                       completeTodo={() => handleCompleteTodo(todo.id)}
-                       deleteTodo={()=>handleDeleteTodo(todo.id)}
-                       />
+            key={key}
+            todo={todo}
+            completeTodo={() => handleCompleteTodo(todo.id)}
+            deleteTodo={() => handleDeleteTodo(todo.id)}
+            updateTodo={()=>handleUpdateTodo(todo.id)}
+          />
         })}
       </div>
 
